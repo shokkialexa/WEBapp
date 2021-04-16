@@ -1,4 +1,3 @@
 flask
-random
 flask_login
 sqlalchemy
