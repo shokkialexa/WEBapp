@@ -9,6 +9,7 @@ from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from forms.settings_form import SettingsForm
 from flask_ngrok import run_with_ngrok
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -21,7 +22,8 @@ login_manager.init_app(app)
 def main():
     db_session.global_init("db/dataBase.db")
     db_sess = db_session.create_session()
-    app.run(port=8080, host='127.0.0.1')
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
     # app.run()
 
 
