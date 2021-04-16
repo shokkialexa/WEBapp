@@ -8,12 +8,11 @@ from data.game_class import Game
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from forms.settings_form import SettingsForm
-from flask_ngrok import run_with_ngrok
 import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-# run_with_ngrok(app)
+
 game = Game()
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -24,7 +23,6 @@ def main():
     db_sess = db_session.create_session()
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)
-    # app.run()
 
 
 def get_background():
