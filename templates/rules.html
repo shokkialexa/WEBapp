@@ -1,0 +1,65 @@
+{% extends "mainpage_base.html" %}
+
+{% block text %}
+<strong>Game progress</strong>
+<br>
+Each player starts the game with six random cards. Players then take turns being the storyteller.
+
+                                  The player whose turn it is to be storyteller looks at the six images in his or her hand.
+
+                                  From one of these, he or she makes up a sentence or phrase that might describe it and says
+
+                                  it out loud or enters it in a special field of the form  (without showing the card to the other players).
+
+
+                                Each other player then selects from among their own six cards the
+
+                                  one that best matches the sentence given by the storyteller.
+
+                                  Then, each player gives their selected card to the storyteller,
+
+                                  without showing it to the others. The storyteller shuffles his or
+
+                                  her chosen card with the cards received from the other players,
+
+                                  and all cards are then dealt face up. The players (except for the storyteller)
+
+                                  then secretly guess which picture was the storyteller's,
+
+                                    by entering the card number in a special field of the form.
+<br>
+                        <strong>Scoring according to Dixit revised rules</strong>
+<br>
+                        The original rules were revised after publication.
+
+                        If all players find the storyteller's card
+                       <br>
+                        Storyteller: 0 points
+                                 <br>
+                        Other players: 2 points
+                                  <br>
+                        If no players find the storyteller's card
+                        <br>
+                        Storyteller: 0 points
+                                  <br>
+                        Other players: 2 points (+1 bonus point per vote for his/her card)
+                                  <br>
+                        If at least 1 player, but not all players have found the storyteller's card
+                        <br>
+                        Storyteller: 3 points
+                                      <br>
+                        Players who found the card: 3 points (+1 bonus point per vote for his/her card)
+                                      <br>
+                        Other players: 0 points (+1 bonus point per vote for his/her card)
+                                      <br>
+                        In the original rules, players who did not find the storyteller's
+
+                                  card were ineligible for bonus points. In the revised rules, the other players receive +1
+
+                                  bonus point per vote for his/her card.(the variant used here)
+
+                        In the original rules, the winner is the first player to reach 30 points.(the variant used here)
+
+                                  In the revised rules, the winner is the player with the most points when the last card is drawn.
+
+{% endblock %}

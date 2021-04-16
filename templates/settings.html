@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+<br>
+<div class="container bg-dark text-light rounded-3 form_class">
+    <h1>Settings</h1>
+            <a class="btn btn-outline-warning" href="/" type="button">Return to the main page</a>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.theme.label }}<br>
+            {{ form.theme(class="form-select") }}<br>
+            {% for error in form.theme.errors %}
+                <p class="alert alert-warning" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.number_of_cards_in_hand.label }}<br>
+            {{ form.number_of_cards_in_hand(class="form-control", type="number") }}<br>
+            {% for error in form.number_of_cards_in_hand.errors %}
+                <p class="alert alert-warning" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+         <p>
+            {{ form.number_of_cards_in_deck.label }}<br>
+            {{ form.number_of_cards_in_deck(class="form-control", type="number") }}<br>
+            {% for error in form.number_of_cards_in_deck.errors %}
+                <p class="alert alert-warning" role="alert">
+                    {{ error }}
+                </p>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit(type="submit", class="btn btn-warning") }}</p>
+        {{message}}
+    </form>
+    <br>
+</div>
+{% endblock %}

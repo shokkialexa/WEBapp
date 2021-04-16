@@ -1,0 +1,71 @@
+{% extends "mainpage_base.html" %}
+
+{% block text %}
+Dixit is a French card game created by Jean-Louis Roubira,
+            illustrated by Marie Cardouat, and published by Libellud.
+            Using a deck of cards illustrated with dreamlike images,
+            players select cards that match a title suggested by the "storyteller",
+            and attempt to guess which card the "storyteller" selected.
+            The game was introduced in 2008. Dixit won the 2010 Spiel des Jahres award.
+        The game's title is the Latin word for "he/she/it said".
+{% endblock %}
+
+{% block buttons %}
+    <br>
+    <br>
+
+    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop2">
+      Create game
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel2">Creating game</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post">
+                <div class="input-group">
+                    <span class="input-group-text">Players' names</span>
+                    <div class="form-floating">
+                        <textarea class="form-control" name="names" id="names" placeholder="Names" style="width: 300px; height: 100px;" required></textarea>
+                        <label for="names">Enter one name on each line</label>
+                    </div>
+                  </div>
+                <br>
+                <button type="submit" class="btn btn-outline-warning">Create game</button>
+                </form>
+                </div>
+          </div>
+        </div>
+      </div>
+
+    <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop3">
+      Join the game
+    </button>
+
+    <div class="modal fade" id="staticBackdrop3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel3">Creating game</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form method="post">
+                <div class="input-group">
+                    <span class="input-group-text">Code</span>
+                    <textarea class="form-control" name="code" aria-label="With textarea" required></textarea>
+                  </div>
+                <br>
+                <button type="submit" class="btn btn-outline-warning">Join the game</button>
+                </form>
+                </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}

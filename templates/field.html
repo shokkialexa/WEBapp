@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div id="pole">
+        <div class="border border-white">
+            <h1 class="display-6 text-warning">Players' points</h1>
+            <div class="container">
+                {% for key in progress.keys() %}
+                    <p class="fs-5 fw-light text-white">{{key}}</p>
+                    <div class="progress" style="height: 20px;">
+                        <div class="progress-bar progress-bar-striped bg-warning"
+                             role="progressbar" aria-valuenow="{{progress[key]}}" aria-valuemin="0" aria-valuemax="30"
+                             style="width: {{progress[key]}}%"> {{progress[key]}}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <br>
+        </div>
+        <h1 class="display-6 text-warning">Assotiation</h1>
+        {% if assotiation %}
+            <p class="fs-5 fw-light text-white"> {{assotiation}} </p>
+        {% else %}
+            <p class="fs-5 fw-light text-white"> No assotiation here </p>
+        {% endif %}
+        <br>
+        <h1 class="display-6 text-warning">Cards</h1>
+        {% if cards %}
+            <div class="d-inline-block" id="cards">
+                {% for elem in cards %}
+                    <figure class="figure">
+                        <img src="{{elem}}" class="figure-img img-fluid rounded">
+                        <figcaption class="figure-caption fw-light fs-5 d-flex bg-dark justify-content-center text-warning">{{loop.index}}</figcaption>
+                    </figure>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="fs-5 fw-light text-white"> Not all players choose card</p>
+        {% endif %}
+    </div>
+{% endblock %}

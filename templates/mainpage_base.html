@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <nav class="navbar navbar-dark bg-dark">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+               </button>
+           <span class="navbar-brand mt-0">
+              <img src="{{url_for('static', filename='img/dixit_logo.png')}}">
+          </span>
+        {% if current_user.is_authenticated %}
+            <p>
+                <a class="btn btn-outline-warning" href="/logout">{{ current_user.name }} log out</a>
+                &nbsp;
+                &nbsp;
+            </p>
+        {% else %}
+                <p>
+                    <a class="btn btn-outline-warning" href="/login" type="button">Log in</a>
+                    <a class="btn btn-outline-secondary" href="/register" type="button">Register</a>
+                    &nbsp;
+                    &nbsp;
+                </p>
+        {% endif %}
+       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <a class="nav-link active " aria-current="page" href="/"><p class="text-warning">Home</p></a>
+              <a class="nav-link" href="/rules"><p class="text-warning">Rules</p></a>
+                {% if current_user.is_authenticated %}
+                    <a class="nav-link" href="/settings"><p class="text-warning">Settings</p></a>
+                {% endif %}
+       </div>
+
+    </nav>
+<div class="container bg-dark h-100 border border-white border-top" id="mainpageInformation">
+    <br>
+<div class="badge bg-dark text-wrap border border-white">
+        <p class="text-start fs-5 fw-light lh-lg">
+            {% block text %}{% endblock %}
+        </p>
+</div>
+    {% block buttons %}{% endblock %}
+    <br>
+    <br>
+</div>
+{% endblock %}

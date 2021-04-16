@@ -1,0 +1,47 @@
+body {
+   background: "#2F4F4F";
+   background-attachment: fixed;
+   background-repeat: vertical-repeat;
+   height: 100%!important;
+}
+nav {
+    margin-left: 0px!important;
+}
+#pole {
+   background: #363636;
+   min-height: 100vh;
+}
+#cards {
+    width: 100%;
+    min-height: 448px;
+    display: inline-flex;
+}
+
+@media screen and (max-device-width: 480px){
+    .carousel_im {
+        margin-left: 15%;
+    }
+    .carousel_capt {
+        margin-left: 10%;
+        width: 300 px;
+    }
+    body {
+       background-size: auto 100%;
+    }
+}
+
+@media screen and (min-device-width: 480px){
+    .carousel_im {
+        margin-left: 40%;
+    }
+    .carousel_capt {
+        margin-left: 25%;
+        width: 200 px;
+    }
+    body {
+       background-size: 100% auto;
+    }
+}
+.form_class {
+    max-width: 320px;
+}

@@ -1,0 +1,10 @@
+CODES = ['LEGOAL', 'LOCOALA', 'HREP', 'BOGIRAFFF', 'HEWOLF',
+         'TYTEBIQOL', 'TIBYDAVOR', 'TEDYH', 'SILODEK', 'HOREMEP',
+         'GAROMUB', 'SESYQYC', 'UXO', 'OSYMARU', 'BYLADUH',
+         'XECEKOJ', 'HOJEH', 'KYTAM', 'GYZ', 'ABICEJE',
+         'LYKOQEGUM', 'VUXUX', 'UKE', 'SUDYK', 'HIN',
+         'TYWIS', 'KUKYHES', 'RIJYJ', 'WYJUKOX', 'AVAWY'
+         'KIK', 'ROSUK', 'CYBIBOS', 'HIFOOCO', 'USOQ',
+         'TUIHAXU', 'KIOK', 'MYVY', 'ZOTYC', 'INOKY',
+         'DADOR', 'SOJI', 'PAUXE', 'AAPY', 'SUUV',
+         'ATORI', 'CIHAZIU', 'BYCEOP', 'GIJUTU', 'VYSOJ']

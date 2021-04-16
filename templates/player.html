@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex bg-dark justify-content-center" id="header">
+    <p class="fs-4 fw-light text-warning">
+        <br>
+        Storyteller: {{direct}}
+        <br>
+        Your points: {{points}}
+        <br>
+        Your place: {{place}}
+    </p>
+</div>
+<br>
+<br>
+<br>
+    <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+      <div class="carousel-inner" id="carousel_cards1">
+        <div class="carousel-item active">
+          <img src="{{url_for('static', filename='img/carousel_main.png')}}" class="carousel_im" alt="Your cards">
+        </div>
+          {% for elem in cards %}
+            <div class="carousel-item">
+                <figure class="figure carousel_im">
+                    <img src="{{elem}}" class="figure-img img-fluid rounded">
+                    <figcaption class="figure-caption fw-light fs-5 d-flex bg-dark justify-content-center text-warning">{{loop.index}}</figcaption>
+                </figure>
+            </div>
+          {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+<br>
+<br>
+<br>
+
+<div class="d-flex bg-dark justify-content-center">
+    <br>
+    <br>
+    <button class="btn btn-outline-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample1" aria-controls="offcanvasExample">
+  Choose the card
+</button>
+</div>
+
+<div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasExample1" aria-labelledby="offcanvasExampleLabel1">
+  <div class="offcanvas-header">
+    <h4 class="offcanvas-title text-warning" id="offcanvasExampleLabel1">Choose the card</h4>
+    <button type="button" class="btn-close text-reset bg-light" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <form method="post" id="form">
+          {% if self_directing %}
+            <div class="input-group">
+                  <span class="input-group-text">Assotiation</span>
+                  <input class="form-control" type="text" name="assotiation" required>assotiation</input>
+              </div>
+              <br>
+          {% endif %}
+        {% if choosing and not self_choose %}
+          <div class="input-group">
+                    <span class="input-group-text">Card number</span>
+                    <input class="form-control" type="number" name="choice" aria-label="With textarea" min="1" max="{{max_number_of_cards}}" required>1</input>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-outline-warning">Select card</button>
+        {% else %}
+              <div class="input-group">
+                    <span class="input-group-text">Card number</span>
+                    <input class="form-control" type="number" name="choice" aria-label="With textarea" min="1" max="{{max_number_of_cards}}" disabled>1</input>
+              </div>
+                <br>
+              <button type="submit" class="btn btn-outline-warning" disabled>Select card</button>
+        {% endif %}
+          <br>
+          <br>
+        {% if voting and not self_vote and not self_directing%}
+          <div class="input-group">
+                <span class="input-group-text">Card number</span>
+                <input class="form-control" type="number" name="vote" aria-label="With textarea" min="1" max="{{max_number_of_cards}}" required>1</input>
+            </div>
+          <br>
+          <button type="submit" class="btn btn-outline-warning">Vote</button>
+        {% else %}
+          <div class="input-group">
+              <span class="input-group-text">Card number</span>
+              <input class="form-control" type="number" name="vote" aria-label="With textarea" min="1" max="{{max_number_of_cards}}" disabled>1</input>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-outline-warning" disabled>Vote</button>
+        {% endif %}
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
