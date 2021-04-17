@@ -21,8 +21,8 @@ login_manager.init_app(app)
 def main():
     db_session.global_init("db/dataBase.db")
     db_sess = db_session.create_session()
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    # port = int(os.environ.get("PORT", 5000))
+    app.run(port=8080, host='127.0.0.1')
 
 
 def get_background():
@@ -71,8 +71,11 @@ def main_page():
     elif request.method == 'POST':
         global game
         if request.form.get('names'):
+            quick_game = False
+            if request.form.get('quick_game'):
+                quick_game = request.form['quick_game']
             names = [x.strip() for x in request.form['names'].split('\n')]
-            code = game.add(names, get_numbers_of_cards())
+            code = game.add(names, get_numbers_of_cards(), quick_game=quick_game)
         if request.form.get('code'):
             code = request.form['code']
         if not game.is_valid_code(code):
@@ -83,9 +86,7 @@ def main_page():
 @app.route('/gamecode/field/<code>')
 def main_pole(code):
     if game.is_win(code):
-        param = dict()
-        param['winners'] = game.is_win(code)
-        return render_template('win.html', **param)
+        return redirect(f'/win/{code}')
     if not game.is_valid_code(code):
         return redirect(f'/wrong/{code}')
     param = {}
@@ -103,9 +104,7 @@ def player(code, name):
     global game
     if request.method == 'GET':
         if game.is_win(code):
-            param = dict()
-            param['winners'] = game.is_win(code)
-            return render_template('win.html', **param)
+            return redirect(f'/win/{code}')
         if not game.is_valid_code(code):
             return redirect(f'/wrong/{code}')
         param = dict()
@@ -140,6 +139,8 @@ def player(code, name):
 @app.route('/gamecode/<code>')
 def gamecode(code):
     global game
+    if game.is_win(code):
+        return redirect(f'/win/{code}')
     if not game.is_valid_code(code):
         return redirect(f'/wrong/{code}')
     param = dict()
@@ -226,6 +227,13 @@ def settings():
 def logout():
     logout_user()
     return redirect("/")
+
+
+@app.route('/win/<code>')
+def win(code):
+    param = dict()
+    param['winners'] = game.is_win(code)
+    return render_template('win.html', **param)
 
 
 if __name__ == '__main__':

@@ -17,8 +17,9 @@ class Game:
         self.assotiation = {}
         self.created_time = {}
         self.timers = {}
+        self.win_points = {}
 
-    def add(self, names_list, card_num):
+    def add(self, names_list, card_num, quick_game=False):
         code = self.choose_url()
         cards_in_hand = card_num[1]
         cards_in_deck = card_num[0]
@@ -28,6 +29,9 @@ class Game:
         self.is_self_vote[code] = {}
         self.is_self_choose[code] = {}
         self.created_time[code] = datetime.now()
+        self.win_points[code] = 30
+        if quick_game:
+            self.win_points[code] = 15
         self.timers[code] = threading.Timer(900, self.control_game, args=(code,)).start()
         self.games_places[code] = {}
         for name in names_list:
@@ -110,24 +114,28 @@ class Game:
 
     def count_places(self, code):
         progress = list(self.games_map[code].get_points().items())
-        progress.sort(key=lambda x: x[1])
+        progress.sort(key=lambda x: x[1], reverse=True)
         places = {}
         for elem in progress:
-            places[elem[0]] = len(progress) + 1
+            places[elem[0]] = progress.index(elem) + 1
         for i in range(len(progress)):
             for j in range(i):
                 if progress[i][1] == progress[j][1] and places[progress[i][0]] > j + 1:
                     places[progress[i][0]] = j + 1
+                    for nm in range(i + 1, len(progress)):
+                        places[progress[nm][0]] -= 1
+        print(places, progress)
         self.games_places[code] = places
 
     def is_win(self, code):
+        if not self.is_everybody_vote[code]:
+            return False
         progress = self.games_map[code].get_points()
         winners = []
         for name in progress.keys():
-            if progress[name] >= 30:
+            if progress[name] >= self.win_points[code]:
                 winners.append(name)
         if winners:
-            self.delete_game(code)
             return winners
         return False
 
@@ -149,7 +157,9 @@ class Game:
         return self.assotiation[code]
 
     def control_game(self, code):
-        if (datetime.now() - self.created_time[code]).total_seconds() >= 7200:
+        if code not in self.created_time.keys():
+            return
+        if (datetime.now() - self.created_time[code]).total_seconds() >= 3600:
             self.delete_game(code)
             return
         self.timers[code] = threading.Timer(900, self.control_game, args=(code,)).start()

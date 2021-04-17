@@ -115,6 +115,10 @@ function UpdatePlayerCards(filename)
                 }
             }
         }
+        if (document.location.href != Request.responseURL)
+        {
+            document.location.href = Request.responseURL;
+        }
 
     }
 

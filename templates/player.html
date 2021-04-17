@@ -45,7 +45,7 @@
     <br>
     <br>
     <button class="btn btn-outline-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample1" aria-controls="offcanvasExample">
-  Choose the card
+  Select card
 </button>
 </div>
 
@@ -58,11 +58,20 @@
     <div>
       <form method="post" id="form">
           {% if self_directing %}
-            <div class="input-group">
-                  <span class="input-group-text">Assotiation</span>
-                  <input class="form-control" type="text" name="assotiation" required>assotiation</input>
-              </div>
-              <br>
+            {% if not self_choose %}
+                <div class="input-group">
+                      <span class="input-group-text">Assotiation</span>
+                      <input class="form-control" type="text" name="assotiation" required>assotiation</input>
+                  </div>
+                  <br>
+
+            {% else %}
+                <div class="input-group">
+                      <span class="input-group-text">Assotiation</span>
+                      <input class="form-control" type="text" name="assotiation" disabled>assotiation</input>
+                  </div>
+                  <br>
+            {% endif %}
           {% endif %}
         {% if choosing and not self_choose %}
           <div class="input-group">
