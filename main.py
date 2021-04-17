@@ -12,7 +12,7 @@ import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-# run_with_ngrok(app)
+
 game = Game()
 login_manager = LoginManager()
 login_manager.init_app(app)
