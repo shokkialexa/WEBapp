@@ -12,4 +12,4 @@ URLS = ['img/1.png', 'img/2.png', 'img/3.png', 'img/4.png', 'img/5.png',
         'img/56.png', 'img/57.png', 'img/58.png', 'img/59.png', 'img/60.png',
         'img/61.png', 'img/62.png', 'img/63.png', 'img/64.png', 'img/65.png',
         'img/66.png', 'img/67.png', 'img/68.png', 'img/69.png', 'img/70.png'
-        'img/71.png', 'img/72.png', 'img/73.png']
+        'img/71.png', 'img/72.png']

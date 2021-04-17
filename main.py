@@ -8,7 +8,7 @@ from data.game_class import Game
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from forms.settings_form import SettingsForm
-from flask_ngrok import run_with_ngrok
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -21,8 +21,8 @@ login_manager.init_app(app)
 def main():
     db_session.global_init("db/dataBase.db")
     db_sess = db_session.create_session()
-    app.run(port=8080, host='127.0.0.1')
-    # app.run()
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 def get_background():
@@ -82,6 +82,12 @@ def main_page():
 
 @app.route('/gamecode/field/<code>')
 def main_pole(code):
+    if game.is_win(code):
+        param = dict()
+        param['winners'] = game.is_win(code)
+        return render_template('win.html', **param)
+    if not game.is_valid_code(code):
+        return redirect(f'/wrong/{code}')
     param = {}
     progress = game.players_progress(code)
     param['title'] = f"Playing field '{code}'"
@@ -96,6 +102,12 @@ def main_pole(code):
 def player(code, name):
     global game
     if request.method == 'GET':
+        if game.is_win(code):
+            param = dict()
+            param['winners'] = game.is_win(code)
+            return render_template('win.html', **param)
+        if not game.is_valid_code(code):
+            return redirect(f'/wrong/{code}')
         param = dict()
         param['direct'] = game.who_is_directing(code)
         param['img'] = get_background()
@@ -111,6 +123,8 @@ def player(code, name):
         param['cards'] = [url_for('static', filename=x) for x in game.cards(code, name)]
         return render_template('player.html', **param)
     if request.method == 'POST':
+        if not game.is_valid_code(code):
+            return redirect(f'/wrong/{code}')
         if request.form.get('choice'):
             num = int(request.form['choice'])
             game.somebody_choose(code, name, num)
@@ -126,6 +140,8 @@ def player(code, name):
 @app.route('/gamecode/<code>')
 def gamecode(code):
     global game
+    if not game.is_valid_code(code):
+        return redirect(f'/wrong/{code}')
     param = dict()
     param['title'] = f'Game {code}'
     param['code'] = code

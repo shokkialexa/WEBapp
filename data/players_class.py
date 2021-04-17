@@ -3,11 +3,11 @@ from data.const.urls import URLS
 
 
 class Players:
-    def __init__(self, cards_num=6, seq_num=62):
+    def __init__(self, cards_num=6, seq_num=72):
         self.players = {}
         self.players_choices = {}
         self.cards_number = cards_num
-        self.cards_sequence = sample(URLS, seq_num)
+        self.cards_sequence = sample(URLS, seq_num - 1)
         self.used_cards = []
         self.people_who_choose = []
         self.people_who_vote = []

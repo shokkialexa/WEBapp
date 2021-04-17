@@ -1,17 +1,19 @@
 {% extends "mainpage_base.html" %}
 
 {% block text %}
-<strong>Game progress</strong>
+<mark><strong>Game progress</strong></mark>
 <br>
-Each player starts the game with six random cards. Players then take turns being the storyteller.
+Each player starts the game with six random cards. Players then take turns being the storyteller(automatically selected).
 
                                   The player whose turn it is to be storyteller looks at the six images in his or her hand.
 
                                   From one of these, he or she makes up a sentence or phrase that might describe it and says
 
-                                  it out loud or enters it in a special field of the form  (without showing the card to the other players).
+                                  it out loud or enters it in a special field of the form  (without showing the card to the other players,
 
+                                form opens when you click select card button).
 
+<br>
                                 Each other player then selects from among their own six cards the
 
                                   one that best matches the sentence given by the storyteller.
@@ -26,9 +28,9 @@ Each player starts the game with six random cards. Players then take turns being
 
                                   then secretly guess which picture was the storyteller's,
 
-                                    by entering the card number in a special field of the form.
+                                    by entering the card number in a special field of the form(opens when you click select card button).
 <br>
-                        <strong>Scoring according to Dixit revised rules</strong>
+<mark><strong>Scoring according to Dixit revised rules</strong></mark>
 <br>
                         The original rules were revised after publication.
 
@@ -62,4 +64,12 @@ Each player starts the game with six random cards. Players then take turns being
 
                                   In the revised rules, the winner is the player with the most points when the last card is drawn.
 
+{% endblock %}
+{% block buttons %}
+    <p class="text-warning fs-3"> Not realize? Video with explanations
+        <a href="https://yandex.ru/video/preview/?text=dixit%20rules&path=wizard&parent-reqid=1618653306790099-1736582995483172428200103-production-app-host-man-web-yp-1&wiz_type=vital&filmId=17088749703779128446" class="link-warning" target="_blank">here</a>
+        <br>
+        On russian
+        <a href="https://yandex.ru/video/preview/?text=rules%20dixit%27&path=wizard&parent-reqid=1618653741141048-673091039274976978300169-production-app-host-man-web-yp-148&wiz_type=vital&filmId=9562442031627754072" class="link-warning" target="_blank">here</a>
+</p>
 {% endblock %}
