@@ -47,6 +47,8 @@ class Game:
         return code
 
     def choose_url(self):
+        if len(self.used_urls) == len(CODES):
+            return None
         code = choice(CODES)
         while code in self.used_urls:
             code = choice(CODES)

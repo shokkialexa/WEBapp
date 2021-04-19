@@ -76,6 +76,8 @@ def main_page():
                 quick_game = request.form['quick_game']
             names = [x.strip() for x in request.form['names'].split('\n')]
             code = game.add(names, get_numbers_of_cards(), quick_game=quick_game)
+            if not code:
+                return redirect(f'/too_many_games')
         if request.form.get('code'):
             code = request.form['code']
         if not game.is_valid_code(code):
@@ -234,6 +236,11 @@ def win(code):
     param = dict()
     param['winners'] = game.is_win(code)
     return render_template('win.html', **param)
+
+
+@app.route('/too_many_games')
+def too_many(code):
+    return render_template('too_many_games.html')
 
 
 if __name__ == '__main__':
