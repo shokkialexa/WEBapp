@@ -1,13 +1,42 @@
 {% extends "mainpage_base.html" %}
 
-{% block text %}
-<mark><strong>How to play</strong></mark>
-<br>
-Rules located <a href="/rules" class="link-warning" target="_blank">here</a>
-{% endblock %}
 {% block buttons %}
     <p class="display-6 text-warning">
         How to play Dixit on our website
     </p>
-    ...images
+    <p class="fs-4 text-light">
+        0. Read the rules
+    </p>
+    <p class="fs-5 fw-light text-light">
+        Rules located <a href="/rules" class="link-warning" target="_blank">here</a>
+    </p>
+
+    <p class="fs-4 text-light">
+        1. Start
+    </p>
+    <img src="{{url_for('static', filename='img/first_step.png')}}" width="100%">
+    <p class="fs-4 text-light">
+        1a. Creating game
+    </p>
+    <img src="{{url_for('static', filename='img/firsta_step.png')}}" width="100%">
+    <p class="fs-4 text-light">
+        2. Page with links
+    </p>
+    <img src="{{url_for('static', filename='img/second_step.png')}}" width="100%">
+    <p class="fs-4 text-light">
+        3. Player cards
+    </p>
+    <br>
+    <p class="fs-5 fw-light text-light">
+       Use these buttons to scroll through the cards
+    </p>
+    <img src="{{url_for('static', filename='img/thirdc_step.png')}}" width="100%">
+    <p class="fs-5 fw-light text-light">
+       Form fields
+    </p>
+    <img src="{{url_for('static', filename='img/third_step.png')}}" width="100%">
+    <p class="fs-5 fw-light text-light">
+       If you are not a storyteller, your form will look something like this
+    </p>
+    <img src="{{url_for('static', filename='img/thirds_step.png')}}" width="100%">
 {% endblock %}

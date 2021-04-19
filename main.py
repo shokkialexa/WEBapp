@@ -239,8 +239,16 @@ def win(code):
 
 
 @app.route('/too_many_games')
-def too_many(code):
+def too_many():
     return render_template('too_many_games.html')
+
+
+@app.route('/brief_guide')
+def about():
+    param = dict()
+    param['img'] = get_background()
+    param['title'] = 'Brief guide'
+    return render_template('about.html', **param)
 
 
 if __name__ == '__main__':
