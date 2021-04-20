@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bg-dark vh-100 text-centered">
-    <div>
+<div class="bg-dark vh-100">
+    <div class="d-flex justify-content-center">
         <p class="text-warning fw-light fs-1">
             Game over!
             <br>
+            <img src="{{url_for('static', filename='img/you win this round.jpg')}}" width="50%">
+            <br>
             Our congratulations to:
             <br>
-                {% for winner in winners %}
-                    {{winner}}
+            {% for winner in winners %}
+                    &hairsp;&hairsp;    {{winner}}
                     <br>
                 {% endfor %}
         </p>
-    </div>
     <br>
-    <a class="btn btn-outline-warning btn-lg" href="../" role="button">Return to the main page</a>
+    </div>
+    <a class="btn btn-outline-warning btn-lg" href="../" role="button" style="margin-left: 30%">Return to the main page</a>
 </div>
 {% endblock %}

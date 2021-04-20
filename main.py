@@ -21,9 +21,9 @@ login_manager.init_app(app)
 def main():
     db_session.global_init("db/dataBase.db")
     db_sess = db_session.create_session()
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
-    # app.run(port=8080, host='127.0.0.1')
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(host='0.0.0.0', port=port)
+    app.run(port=8080, host='127.0.0.1')
 
 
 def get_background():
@@ -88,10 +88,10 @@ def main_page():
 
 @app.route('/gamecode/field/<code>')
 def main_pole(code):
-    if game.is_win(code):
-        return redirect(f'/win/{code}')
     if not game.is_valid_code(code):
         return redirect(f'/wrong/{code}')
+    if game.is_win(code):
+        return redirect(f'/win/{code}')
     param = {}
     progress = game.players_progress(code)
     param['title'] = f"Playing field '{code}'"
@@ -106,10 +106,10 @@ def main_pole(code):
 def player(code, name):
     global game
     if request.method == 'GET':
-        if game.is_win(code):
-            return redirect(f'/win/{code}')
         if not game.is_valid_code(code):
             return redirect(f'/wrong/{code}')
+        if game.is_win(code):
+            return redirect(f'/win/{code}')
         param = dict()
         param['direct'] = game.who_is_directing(code)
         param['img'] = get_background()
@@ -142,10 +142,10 @@ def player(code, name):
 @app.route('/gamecode/<code>')
 def gamecode(code):
     global game
-    if game.is_win(code):
-        return redirect(f'/win/{code}')
     if not game.is_valid_code(code):
         return redirect(f'/wrong/{code}')
+    if game.is_win(code):
+        return redirect(f'/win/{code}')
     param = dict()
     param['title'] = f'Game {code}'
     param['code'] = code
@@ -234,13 +234,20 @@ def logout():
 
 @app.route('/win/<code>')
 def win(code):
+    if not game.is_valid_code(code):
+        return redirect(f'/wrong/{code}')
     param = dict()
+    param['img'] = get_background()
+    param['title'] = 'Game over'
     param['winners'] = game.is_win(code)
     return render_template('win.html', **param)
 
 
 @app.route('/too_many_games')
 def too_many():
+    param = dict()
+    param['img'] = get_background()
+    param['title'] = 'Too many games'
     return render_template('too_many_games.html')
 
 
@@ -250,6 +257,22 @@ def about():
     param['img'] = get_background()
     param['title'] = 'Brief guide'
     return render_template('about.html', **param)
+
+
+@app.errorhandler(500)
+def internal_error():
+    param = dict()
+    param['img'] = get_background()
+    param['title'] = 'Mistake:('
+    return render_template('500.html'), 500
+
+
+@app.errorhandler(404)
+def internal_error():
+    param = dict()
+    param['img'] = get_background()
+    param['title'] = 'Come back'
+    return render_template('404.html'), 404
 
 
 if __name__ == '__main__':

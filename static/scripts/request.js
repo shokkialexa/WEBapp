@@ -54,10 +54,6 @@ function SendRequest(r_method, r_path, r_args, r_handler)
                 //Передаем управление обработчику пользователя
                 r_handler(Request);
             }
-            else
-            {
-                alert('Error')
-            }
         }
 
     }
@@ -88,7 +84,7 @@ function SendRequest(r_method, r_path, r_args, r_handler)
         Request.send(null);
     }
 }
-function UpdatePlayerCards(filename)
+function Update(filename)
 {
     //Создаем функцию обработчик
     var Handler = function(Request)
@@ -118,6 +114,7 @@ function UpdatePlayerCards(filename)
         if (document.location.href != Request.responseURL)
         {
             document.location.href = Request.responseURL;
+            Update(document.location.href);
         }
 
     }
@@ -127,7 +124,7 @@ function UpdatePlayerCards(filename)
     SendRequest("GET",filename,"",Handler);
 
 }
-let timerId = setInterval(UpdatePlayerCards, 10000, document.location.href);
+let timerId = setInterval(Update, 10000, document.location.href);
 addEventListener("keydown", function(event)
 {
 if (typeof timerId != 'undefined')
@@ -135,7 +132,7 @@ if (typeof timerId != 'undefined')
     clearInterval(timerId);
 }
 let timerIdTimeout = setTimeout(function delay() {
-let timerId = setInterval(UpdatePlayerCards, 10000, document.location.href);
+let timerId = setInterval(Update, 10000, document.location.href);
 }, 40000)
 });
 

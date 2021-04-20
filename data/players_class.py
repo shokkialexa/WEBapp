@@ -118,7 +118,7 @@ class Players:
                     self.points[name] -= 3
                     if self.points[name] < 0:
                         self.points[name] = 0
-        if number_of_true_answers == 0:
+        elif number_of_true_answers == 0:
             for name in self.points.keys():
                 if name != self.directing:
                     self.points[name] += 2
