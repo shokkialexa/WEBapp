@@ -1,8 +1,11 @@
 {% extends "mainpage_base.html" %}
 
 {% block text %}
-<mark><strong>Game progress</strong></mark>
+<p class="display-6 text-warning">
+<strong>Game progress</strong>
+</p>
 <br>
+<p class="fs-5 fw-light text-light">
 Each player starts the game with six random cards. Players then take turns being the storyteller(automatically selected).
 
                                   The player whose turn it is to be storyteller looks at the six images in his or her hand.
@@ -30,7 +33,11 @@ Each player starts the game with six random cards. Players then take turns being
 
                                     by entering the card number in a special field of the form(opens when you click select card button).
 <br>
-<mark><strong>Scoring according to Dixit revised rules</strong></mark>
+</p>
+<p class="display-6 text-warning">
+<strong>Scoring according to Dixit revised rules</strong>
+</p>
+<p class="fs-5 fw-light text-light">
 <br>
                         The original rules were revised after publication.
 
@@ -63,7 +70,7 @@ Each player starts the game with six random cards. Players then take turns being
                         In the original rules, the winner is the first player to reach 30 points.(the variant used here)
 
                                   In the revised rules, the winner is the player with the most points when the last card is drawn.
-
+</p>
 {% endblock %}
 {% block buttons %}
     <p class="text-warning fs-3"> Not realize? Video with explanations

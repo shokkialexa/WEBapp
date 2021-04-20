@@ -32,12 +32,10 @@
        </div>
 
     </nav>
-<div class="container bg-dark h-100 border border-white border-top" id="mainpageInformation">
+<div class="container bg-dark h-100 border-top border-white" id="mainpageInformation">
     <br>
-<div class="badge bg-dark text-wrap border border-white">
-        <p class="text-start fs-5 fw-light lh-lg">
-            {% block text %}{% endblock %}
-        </p>
+<div class="container bg-dark border border-white">
+        {% block text %}{% endblock %}
 </div>
     {% block buttons %}{% endblock %}
     <br>
