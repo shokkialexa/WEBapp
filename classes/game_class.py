@@ -107,7 +107,11 @@ class Game:
         return self.games_map[code].image_choices()
 
     def players_progress(self, code):
-        return self.games_map[code].get_points()
+        progress = dict()
+        p = self.games_map[code].get_points().items()
+        for name, points in p:
+            progress[name] = points / self.win_points[code] * 100
+        return progress
 
     def player_place(self, code, name):
         if self.is_win(code):
@@ -126,7 +130,6 @@ class Game:
                     places[progress[i][0]] = j + 1
                     for nm in range(i + 1, len(progress)):
                         places[progress[nm][0]] -= 1
-        print(places, progress)
         self.games_places[code] = places
 
     def is_win(self, code):
