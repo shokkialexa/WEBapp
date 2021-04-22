@@ -21,9 +21,9 @@ login_manager.init_app(app)
 def main():
     db_session.global_init("db/dataBase.db")
     db_sess = db_session.create_session()
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
-    # app.run(port=8080, host='127.0.0.1')
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(host='0.0.0.0', port=port)
+    app.run(port=8080, host='127.0.0.1')
 
 
 def get_background():
@@ -123,6 +123,7 @@ def player(code, name):
         param['self_directing'] = (game.who_is_directing(code) == name)
         param['max_number_of_cards'] = game.max_number_of_cards(code, name)
         param['cards'] = [url_for('static', filename=x) for x in game.cards(code, name)]
+        param['time'] = game.get_time(code)
         return render_template('player.html', **param)
     if request.method == 'POST':
         if not game.is_valid_code(code):
@@ -260,7 +261,7 @@ def about():
 
 
 @app.errorhandler(500)
-def internal_error():
+def internal_error(error):
     param = dict()
     param['img'] = get_background()
     param['title'] = 'Mistake:('
@@ -268,7 +269,7 @@ def internal_error():
 
 
 @app.errorhandler(404)
-def internal_error():
+def not_found_error(error):
     param = dict()
     param['img'] = get_background()
     param['title'] = 'Come back'

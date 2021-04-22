@@ -176,3 +176,6 @@ class Game:
         del self.games_places[code]
         del self.assotiation[code]
         del self.created_time[code]
+
+    def get_time(self, code):
+        return round(60 - (datetime.now() - self.created_time[code]).total_seconds() / 60)
