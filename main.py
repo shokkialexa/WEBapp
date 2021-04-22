@@ -80,7 +80,7 @@ def main_page():
             if not code:
                 return redirect(f'/too_many_games')
         if request.form.get('code'):
-            code = request.form['code']
+            code = request.form['code'].strip().upper()
         if not game.is_valid_code(code):
             return redirect(f'/wrong/{code}')
         return redirect(f'/gamecode/{code}')
