@@ -1,5 +1,5 @@
-from data.players_class import Players
-from data.const.codes import CODES
+from classes.players_class import Players
+from classes.const.codes import CODES
 from random import choice
 from datetime import datetime
 import threading

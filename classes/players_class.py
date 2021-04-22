@@ -1,5 +1,5 @@
 from random import choice, shuffle, sample
-from data.const.urls import URLS
+from classes.const.urls import URLS
 
 
 class Players:

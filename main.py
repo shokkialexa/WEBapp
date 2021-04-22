@@ -4,7 +4,7 @@ from flask_login import LoginManager
 from data import db_session
 from data.users import User
 from data.settings import Settings
-from data.game_class import Game
+from classes.game_class import Game
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from forms.settings_form import SettingsForm
