@@ -98,34 +98,23 @@ class Players:
     def count_points(self):
         number_of_true_answers = 0
         for key, value in self.answers.items():
-            if self.is_true(key):
+            if value == self.directing:
                 self.points[key] += 3
                 number_of_true_answers += 1
-            elif key == value:
-                self.points[key] -= 3
-                if self.points[key] < 0:
-                    self.points[key] = 0
-            else:
+            elif key != value:
                 self.points[value] += 1
-        self.points[self.directing] += 3
         if number_of_true_answers == len(self.players) - 1:
             for name in self.points.keys():
                 if name != self.directing:
                     self.points[name] -= 1
                     if self.points[name] < 0:
                         self.points[name] = 0
-                else:
-                    self.points[name] -= 3
-                    if self.points[name] < 0:
-                        self.points[name] = 0
         elif number_of_true_answers == 0:
             for name in self.points.keys():
                 if name != self.directing:
                     self.points[name] += 2
-                else:
-                    self.points[name] -= 3
-                    if self.points[name] < 0:
-                        self.points[name] = 0
+        else:
+            self.points[self.directing] += 3
 
     def get_points(self):
         return self.points
