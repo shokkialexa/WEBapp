@@ -12,6 +12,9 @@ import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+app.config.update(
+    PREFERRED_URL_SCHEME='https'
+)
 
 game = Game()
 login_manager = LoginManager()
