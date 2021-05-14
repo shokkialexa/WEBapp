@@ -8,7 +8,7 @@ from classes.game_class import Game
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from forms.settings_form import SettingsForm
-# import os
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -26,9 +26,9 @@ def main():
 
     db_session.global_init("db/dataBase.db")
     db_sess = db_session.create_session()
-    # port = int(os.environ.get("PORT", 5000))
-    # app.run(host='0.0.0.0', port=port)
-    app.run(port=8080, host='127.0.0.1')
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
+    # app.run(port=8080, host='127.0.0.1')
 
 
 def get_background():
