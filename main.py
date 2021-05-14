@@ -8,7 +8,7 @@ from classes.game_class import Game
 from forms.login_form import LoginForm
 from forms.register_form import RegisterForm
 from forms.settings_form import SettingsForm
-import os
+# import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -22,14 +22,18 @@ login_manager.init_app(app)
 
 
 def main():
+    """Функция запуска приложения"""
+
     db_session.global_init("db/dataBase.db")
     db_sess = db_session.create_session()
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
-    # app.run(port=8080, host='127.0.0.1')
+    # port = int(os.environ.get("PORT", 5000))
+    # app.run(host='0.0.0.0', port=port)
+    app.run(port=8080, host='127.0.0.1')
 
 
 def get_background():
+    """Функция get_background возвращает фоновую картинку для данного авторизированного пользователя"""
+
     img = url_for('static', filename='img/default.jpg')
     if current_user.is_authenticated:
         db_sess = db_session.create_session()
@@ -52,11 +56,14 @@ def get_background():
 
 
 def get_numbers_of_cards():
+    """Функция get_numbers_of_cards возвращает из настроек пользователя количество карт в колоде и в руке,
+     если пользователь не авторизирован, то дефолтные значения количества"""
+
     if current_user.is_authenticated:
         db_sess = db_session.create_session()
         setting = db_sess.query(Settings).filter(Settings.user == current_user).first()
         return setting.cards_in_deck, setting.cards_in_hand
-    return 62, 6
+    return 72, 6
 
 
 @login_manager.user_loader
@@ -67,6 +74,8 @@ def load_user(user_id):
 
 @app.route('/', methods=['GET', 'POST'])
 def main_page():
+    """Функция обработки адреса / - главная страница приложения"""
+
     if request.method == 'GET':
         param = dict()
         param['img'] = get_background()
@@ -79,6 +88,31 @@ def main_page():
             if request.form.get('quick_game'):
                 quick_game = request.form['quick_game']
             names = [x.strip() for x in request.form['names'].split('\n')]
+            for name in names:
+                if name == "":
+                    param = dict()
+                    param['img'] = get_background()
+                    param['title'] = "Main page"
+                    param['message'] = 'Do not leave an empty string'
+                    return render_template('main.html', **param)
+                if names.count(name) >= 2:
+                    param = dict()
+                    param['img'] = get_background()
+                    param['title'] = "Main page"
+                    param['message'] = 'Names must be unique'
+                    return render_template('main.html', **param)
+            if len(names) <= 2:
+                param = dict()
+                param['img'] = get_background()
+                param['title'] = "Main page"
+                param['message'] = 'Too few players'
+                return render_template('main.html', **param)
+            if get_numbers_of_cards()[0] // get_numbers_of_cards()[1] + 1 < len(names):
+                param = dict()
+                param['img'] = get_background()
+                param['title'] = "Main page"
+                param['message'] = 'Too many players.Try changing the settings if you are logged in'
+                return render_template('main.html', **param)
             code = game.add(names, get_numbers_of_cards(), quick_game=quick_game)
             if not code:
                 return redirect(f'/too_many_games')
@@ -91,6 +125,8 @@ def main_page():
 
 @app.route('/gamecode/field/<code>')
 def main_pole(code):
+    """Функция обработки адреса /gamecode/field/<code> - отображения поля игры"""
+
     if not game.is_valid_code(code):
         return redirect(f'/wrong/{code}')
     if game.is_win(code):
@@ -107,6 +143,9 @@ def main_pole(code):
 
 @app.route('/gamecode/player_cards/<string:code>/<name>', methods=['POST', 'GET'])
 def player(code, name):
+    """Функция обработки адреса /gamecode/player_cards/<string:code>/<name> - отображение карт пользователя,
+    формы для голосования и т.д"""
+
     global game
     if request.method == 'GET':
         if not game.is_valid_code(code):
@@ -145,6 +184,8 @@ def player(code, name):
 
 @app.route('/gamecode/<code>')
 def gamecode(code):
+    """Функция обработки адреса /gamecode/<code> - главная страница игры"""
+
     global game
     if not game.is_valid_code(code):
         return redirect(f'/wrong/{code}')
@@ -160,6 +201,8 @@ def gamecode(code):
 
 @app.route('/wrong/<code>')
 def wrongcode(code):
+    """Функция обработки адреса /wrong/<code> - попытки зайти на игру с несуществующим кодом"""
+
     param = dict()
     param['title'] = f'Wrong code - {code}'
     param['img'] = get_background()
@@ -168,6 +211,8 @@ def wrongcode(code):
 
 @app.route('/rules')
 def rules():
+    """Функция обработки адреса /rules - отображение страницы с правилами"""
+
     param = dict()
     param['title'] = 'Main page'
     param['img'] = get_background()
@@ -176,6 +221,8 @@ def rules():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """Функция обработки адреса /register - регистрация пользователя с помощью модели формы RegisterForm"""
+
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
@@ -202,6 +249,8 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """Функция обработки адреса /login - авторизация пользователя с помощью модели формы LoginForm"""
+
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
@@ -217,6 +266,8 @@ def login():
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
+    """Функция обработки адреса /settings - изменение настроек игры с помощью модели формы SettingsForm"""
+
     form = SettingsForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
@@ -232,12 +283,16 @@ def settings():
 @app.route('/logout')
 @login_required
 def logout():
+    """Функция обработки адреса /logout - выхода пользователя"""
+
     logout_user()
     return redirect("/")
 
 
 @app.route('/win/<code>')
 def win(code):
+    """Функция обработки адреса /win/<code> - страницы, появляющейся когда один из игроков выиграл"""
+
     if not game.is_valid_code(code):
         return redirect(f'/wrong/{code}')
     param = dict()
@@ -249,6 +304,8 @@ def win(code):
 
 @app.route('/too_many_games')
 def too_many():
+    """Функция обработки адреса /too_many_games - обработка ситуации нехватки уникальных кодов для игр"""
+
     param = dict()
     param['img'] = get_background()
     param['title'] = 'Too many games'
@@ -257,6 +314,8 @@ def too_many():
 
 @app.route('/brief_guide')
 def about():
+    """Функция обработки адреса /brief_guide - отображение краткого гида по приложению"""
+
     param = dict()
     param['img'] = get_background()
     param['title'] = 'Brief guide'
@@ -265,6 +324,8 @@ def about():
 
 @app.errorhandler(500)
 def internal_error(error):
+    """Функция обработки ошибки 500"""
+
     param = dict()
     param['img'] = get_background()
     param['title'] = 'Mistake:('
@@ -273,6 +334,8 @@ def internal_error(error):
 
 @app.errorhandler(404)
 def not_found_error(error):
+    """Функция обработки ошибки 404"""
+
     param = dict()
     param['img'] = get_background()
     param['title'] = 'Come back'
